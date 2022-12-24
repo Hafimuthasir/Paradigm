@@ -38,10 +38,16 @@ class CommentSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model=Posts
 #         fields = ('id','file','caption','created_at','likes','userid','like','comment')
+class PrimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=PremiumPurchases
+        fields = '__all__'
+
 
 class PostSerializer(serializers.ModelSerializer):
     like     = LikeSerializer(many=True)
     comment  = CommentSerializer(many=True)
+    prime    = PrimeSerializer(many=True)
     username = serializers.SerializerMethodField('get_username')
     profile  = serializers.SerializerMethodField('get_profile')
     bio      = serializers.SerializerMethodField('get_bio')
@@ -49,7 +55,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Posts
-        fields = ('id','file','caption','created_at','likes','userid','like','comment','username','profile','bio')
+        fields = ('id','file','caption','created_at','likes','userid','like','comment','username','profile','bio',
+        'lang','repo','is_z','zfile','zdescription','is_premium','price','prime'
+        )
 
     def get_username(self,user):
         if user.userid.get_first_name():

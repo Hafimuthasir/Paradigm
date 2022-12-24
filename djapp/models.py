@@ -83,6 +83,14 @@ class Posts(models.Model):
     caption = models.CharField(max_length=1000)
     created_at = models.DateTimeField(auto_now=True)
     likes = models.IntegerField(default=0)
+    lang = models.CharField(max_length=100,blank=True)
+    repo = models.CharField(max_length=1000,blank=True)
+    is_z = models.BooleanField(default=False)
+    zfile = models.FileField(upload_to='C:/Users/AKAM/Desktop/React/week2/djangoproject/reactapp/src/uploads/zpostfile',blank=True)
+    zdescription = models.CharField(max_length=1000,blank=True)
+    is_premium = models.BooleanField(default=False)
+    price = models.IntegerField(default=0)
+    discount_price = models.IntegerField(default=0)
 
 
 
@@ -109,3 +117,7 @@ class Follow(models.Model):
 
     # def follow_count(self):
     #     return self.follower.count()
+
+class PremiumPurchases(models.Model):
+    userid = models.ForeignKey(User,related_name="use",on_delete=models.CASCADE)
+    postid = models.ForeignKey(Posts,related_name="prime",on_delete=models.CASCADE)

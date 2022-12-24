@@ -9,6 +9,9 @@ import jwt,datetime
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializer import *
+from django.core.files import File
+from django.http import HttpResponse
+from rest_framework.decorators import api_view
 # Create your views here.
 
 
@@ -259,3 +262,36 @@ def ProfileCounts(request,id):
     #     return Response('Following')
     # else:
     #     return Response('Follow')
+
+
+
+# @api_view(['GET'])
+# def DownloadFile(self):
+#     path_to_file = 'reactapp/src/uploads/zpostfile' + '/FACE_MASK_fG5rUZ1.rar'
+#     f = open(path_to_file, 'rb')
+#     pdfFile = File(f)
+#     response = HttpResponse(pdfFile.read())
+#     response['Content-Disposition'] = 'attachment;'
+#     return response
+
+
+@api_view(['POST'])
+def dummyPurchase(request):
+    data=request.data
+    serializer = PrimeSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    if serializer.is_valid:
+        serializer.save()
+        return Response('success')
+    return Response(serializer.errors)
+    
+    
+
+@api_view(['GET'])
+def DownloadFile(self,filename):
+    print('0000000000',filename)
+    # with open('reactapp/src/uploads/zpostfile/FACE_MASK_fG5rUZ1.rar') as f:
+    zip_file = open('reactapp/src/uploads/zpostfile/'+filename, 'rb')
+    response = HttpResponse(zip_file, content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % 'foo.zip'
+    return response

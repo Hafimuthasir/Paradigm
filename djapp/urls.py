@@ -22,7 +22,9 @@ urlpatterns = [
     path('follow',follow,name='follow'),
     path('followCheck',followCheck,name='followCheck'),
     path('ProfileCounts/<id>',ProfileCounts,name='ProfileCounts'),
-    
+
+    path('dummyPurchase',dummyPurchase,name='dummyPurchase'),
+    path('DownloadFile/<str:filename>',DownloadFile,name='DownloadFile'),
 
     path('',getRoutes,name='routes'),
     path('token', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
